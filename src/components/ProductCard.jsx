@@ -8,7 +8,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { useToast } from "@/components/ui/use-toast"
 import { addToCart } from "../lib/api"
 
-const API_BASE_URL = "http://localhost:3001"
+const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
 
 const ProductCard = ({ product, isStoreView = false }) => {
   const { user } = useAuth()
@@ -69,7 +69,7 @@ const ProductCard = ({ product, isStoreView = false }) => {
             alt={product.name}
             className="object-cover w-full h-full transition-transform group-hover:scale-110"
             onError={(e) => {
-              e.target.src = "/placeholder.svg?height=300&width=300"
+              e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlyqPKdFbQpdhwYSFNLCnYuoxgY-6f7VV7Uw&s"
             }}
           />
         </div>
