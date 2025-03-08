@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import ProductCard from "../components/ProductCard"
 import OrderItem from "../components/OrderItem"
 
-const API_BASE_URL = "http://localhost:3001"
+const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
 
 const StoreProfile = () => {
   const { store, login } = useAuth()
