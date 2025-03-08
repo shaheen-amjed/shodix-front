@@ -128,7 +128,7 @@ const ProductDetail = () => {
               alt={product.name}
               className="w-full h-auto object-cover"
               onError={(e) => {
-                e.target.src = "/placeholder.svg?height=600&width=600"
+                e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlyqPKdFbQpdhwYSFNLCnYuoxgY-6f7VV7Uw&s"
               }}
             />
           </div>
