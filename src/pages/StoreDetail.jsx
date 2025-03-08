@@ -109,7 +109,7 @@ const StoreDetail = () => {
             alt={store.store_name}
             className="w-48 h-48 rounded-full object-cover"
             onError={(e) => {
-              e.target.src = "/placeholder.svg?height=200&width=200"
+              e.target.src = `https://shodix-api-node-production.up.railway.app${store.img}`
             }}
           />
           <div className="flex-1">
