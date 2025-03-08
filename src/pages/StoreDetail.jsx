@@ -105,7 +105,7 @@ const StoreDetail = () => {
       >
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <img
-            src={`http://localhost:3001${store.img}`}
+            src={`https://shodix-api-node-production.up.railway.app${store.img}`}
             alt={store.store_name}
             className="w-48 h-48 rounded-full object-cover"
             onError={(e) => {
