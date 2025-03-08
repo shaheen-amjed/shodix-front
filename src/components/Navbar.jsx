@@ -24,8 +24,6 @@ const Navbar = () => {
     setIsMenuOpen(false)
   }
 
-
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -36,7 +34,10 @@ const Navbar = () => {
           </Link>
         </div>
 
-        
+        {/* Centered text */}
+        <div className="hidden md:flex items-center justify-center flex-1 mx-4 text-sm text-gray-500">
+          The platform I deployed the app in doesn't support file uploads, so I am using placeholders instead.
+        </div>
 
         <nav className="hidden md:flex items-center gap-4">
           <ThemeToggle />
@@ -214,4 +215,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-
