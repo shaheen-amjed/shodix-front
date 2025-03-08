@@ -2,7 +2,7 @@ import axios from "axios"
 import Cookies from 'js-cookie'
 
 // Use environment variables for API URL to support different environments
-const API_URL = "http://localhost:3001"
+const API_URL = "https://shodix-api-node-production.up.railway.app"
 
 // Create axios instance with consistent configuration
 const api = axios.create({
