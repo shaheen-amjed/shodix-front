@@ -24,8 +24,6 @@ const Navbar = () => {
     setIsMenuOpen(false)
   }
 
-
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -36,7 +34,10 @@ const Navbar = () => {
           </Link>
         </div>
 
-        
+        {/* Centered text */}
+        <div className="hidden md:flex items-center justify-center flex-1 mx-4 text-sm text-gray-500">
+          The platform I deployed the app in doesn't support file uploads, so I am using placeholders instead.
+        </div>
 
         <nav className="hidden md:flex items-center gap-4">
           <ThemeToggle />
@@ -117,95 +118,103 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden p-4 border-t"
+          className="fixed inset-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden"
         >
-          <form onSubmit={handleSearch} className="flex items-center mb-4">
-            <Input
-              type="search"
-              placeholder="Search products..."
-              className="w-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button type="submit" size="icon" className="ml-2">
-              <Search className="h-4 w-4" />
-            </Button>
-          </form>
+          <div className="container h-full p-4">
+            <div className="flex justify-end">
+              <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
 
-          <div className="grid gap-2">
-            {user && (
-              <>
-                <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Shop
-                  </Button>
-                </Link>
-                <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    <MessageSquare className="h-5 w-5 mr-2" /> Messages
-                  </Button>
-                </Link>
-                <Link to="/cart" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    <ShoppingCart className="h-5 w-5 mr-2" /> Cart {cartCount > 0 && `(${cartCount})`}
-                  </Button>
-                </Link>
-                <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    <User className="h-5 w-5 mr-2" /> Profile
-                  </Button>
-                </Link>
-                <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
-                  <LogOut className="h-5 w-5 mr-2" /> Logout
-                </Button>
-              </>
-            )}
+            <form onSubmit={handleSearch} className="flex items-center mb-4">
+              <Input
+                type="search"
+                placeholder="Search products..."
+                className="w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button type="submit" size="icon" className="ml-2">
+                <Search className="h-4 w-4" />
+              </Button>
+            </form>
 
-            {store && (
-              <>
-                <Link to="/store/inbox" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    <MessageSquare className="h-5 w-5 mr-2" /> Messages
+            <div className="grid gap-2">
+              {user && (
+                <>
+                  <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      Shop
+                    </Button>
+                  </Link>
+                  <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <MessageSquare className="h-5 w-5 mr-2" /> Messages
+                    </Button>
+                  </Link>
+                  <Link to="/cart" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <ShoppingCart className="h-5 w-5 mr-2" /> Cart {cartCount > 0 && `(${cartCount})`}
+                    </Button>
+                  </Link>
+                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <User className="h-5 w-5 mr-2" /> Profile
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                    <LogOut className="h-5 w-5 mr-2" /> Logout
                   </Button>
-                </Link>
-                <Link to="/store/profile" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    <Store className="h-5 w-5 mr-2" /> Store Dashboard
-                  </Button>
-                </Link>
-                <Link to="/store/orders" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Orders
-                  </Button>
-                </Link>
-                <Link to="/store/add-product" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Add Product
-                  </Button>
-                </Link>
-                <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
-                  <LogOut className="h-5 w-5 mr-2" /> Logout
-                </Button>
-              </>
-            )}
+                </>
+              )}
 
-            {!isAuthenticated && (
-              <>
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full">
-                    Login
+              {store && (
+                <>
+                  <Link to="/store/inbox" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <MessageSquare className="h-5 w-5 mr-2" /> Messages
+                    </Button>
+                  </Link>
+                  <Link to="/store/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <Store className="h-5 w-5 mr-2" /> Store Dashboard
+                    </Button>
+                  </Link>
+                  <Link to="/store/orders" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      Orders
+                    </Button>
+                  </Link>
+                  <Link to="/store/add-product" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      Add Product
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                    <LogOut className="h-5 w-5 mr-2" /> Logout
                   </Button>
-                </Link>
-                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full">Sign Up</Button>
-                </Link>
-                <Link to="/store/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full">
-                    Store Login
-                  </Button>
-                </Link>
-              </>
-            )}
+                </>
+              )}
+
+              {!isAuthenticated && (
+                <>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full">Sign Up</Button>
+                  </Link>
+                  <Link to="/store/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Store Login
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </motion.div>
       )}
