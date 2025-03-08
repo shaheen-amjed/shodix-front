@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import LoadingScreen from "../components/LoadingScreen"
 import LocationModal from "../components/LocationModal" // Import the LocationModal component
 
-const API_BASE_URL = "http://localhost:3001"
+const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
 
 const ProductDetail = () => {
   const { id } = useParams()
