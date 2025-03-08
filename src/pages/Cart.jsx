@@ -139,7 +139,7 @@ const Cart = () => {
               className="flex items-center gap-4 p-4 border rounded-lg"
             >
               <img
-                src={`https://shodix-api-node.vercel.app${item.img}`}
+                src={`https://shodix-api-node-production.up.railway.app${item.img}`}
                 alt={item.name}
                 className="w-24 h-24 object-cover rounded"
                 onError={(e) => {
