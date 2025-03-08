@@ -25,8 +25,8 @@ const Chat = ({ storeView = false }) => {
   const fetchMessages = async () => {
     try {
       const chatId = storeView
-        ? `${store.store_name}_and_${username}`
-        : `${storeName}_and_${user.username}`;
+        ? `${store.store_name}/and/${username}`
+        : `${storeName}/and/${user.username}`;
       const response = await getMessages(chatId);
       setMessages(response.data);
     } catch (error) {
@@ -43,12 +43,12 @@ const Chat = ({ storeView = false }) => {
 
     try {
       const chatId = storeView
-        ? `${store.store_name}_and_${username}`
-        : `${storeName}_and_${user.username}`;
+        ? `${store.store_name}/and/${username}`
+        : `${storeName}/and/${user.username}`;
       await sendMessage(chatId, newMessage);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: user.username, message: newMessage, timestamp: new Date() },
+        { msg: newMessage, timestamp: new Date().toISOString() },
       ]);
       setNewMessage("");
     } catch (error) {
@@ -62,7 +62,9 @@ const Chat = ({ storeView = false }) => {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   if (loading) {
@@ -97,7 +99,7 @@ const Chat = ({ storeView = false }) => {
                     : "bg-secondary"
                 }`}
               >
-                {message.message}
+                {message.msg}
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
                 {new Date(message.timestamp).toLocaleString()}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import Footer from "../components/Footer"
 
 const StoreRegister = () => {
   const [formData, setFormData] = useState({
@@ -54,6 +55,7 @@ const StoreRegister = () => {
   }
 
   return (
+    <>
     <div className="max-w-md mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -133,7 +135,9 @@ const StoreRegister = () => {
           </p>
         </div>
       </motion.div>
+      <Footer />
     </div>
+    </>
   )
 }
 

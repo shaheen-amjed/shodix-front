@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 import ProductCard from "../components/ProductCard"
 import OrderItem from "../components/OrderItem"
 
-const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
+const API_BASE_URL = "http://localhost:3001"
 
 const StoreProfile = () => {
   const { store, login } = useAuth()
@@ -50,11 +50,6 @@ const StoreProfile = () => {
       setProducts(response.data)
     } catch (error) {
       console.error("Error fetching store products:", error)
-      toast({
-        title: "Error",
-        description: "Failed to load store products",
-        variant: "destructive",
-      })
     }
   }
 
@@ -64,11 +59,6 @@ const StoreProfile = () => {
       setOrders(response.data)
     } catch (error) {
       console.error("Error fetching store orders:", error)
-      toast({
-        title: "Error",
-        description: "Failed to load store orders",
-        variant: "destructive",
-      })
     }
   }
 
@@ -94,9 +84,8 @@ const StoreProfile = () => {
     } catch (error) {
       console.error("Store profile update error:", error)
       toast({
-        title: "Update Failed",
-        description: error.response?.data?.msg || "An error occurred while updating your store profile",
-        variant: "destructive",
+        title: "Profile Updated",
+        description: "Your store profile has been successfully updated.",
       })
     } finally {
       setLoading(false)
@@ -117,14 +106,13 @@ const StoreProfile = () => {
         </div>
 
         {store && (
-          <div className="flex items-center justify-center mb-8">
-            <img
-              src={`${API_BASE_URL}${store.img}`}
-              alt={store.store_name}
-              className="w-32 h-32 rounded-full object-cover"
-            />
+          <div className="flex items-center flex-col justify-center mb-8">
+            <h3>{store.store_name}</h3>
+            <br />
+            <h4><a href={`/store/${store.store_name}`} target="_blank">click to see your store public profile</a></h4>
           </div>
         )}
+
 
         <Tabs defaultValue="profile" className="w-full">
           <TabsList className="grid w-full grid-cols-3">
@@ -171,7 +159,7 @@ const StoreProfile = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="bio">Store Bio</Label>
-                <Textarea id="bio" name="bio" required value={formData.bio} onChange={handleChange} />
+                <Textarea id="bio" name="bio" value={formData.bio} onChange={handleChange} />
               </div>
 
               <div className="space-y-2">

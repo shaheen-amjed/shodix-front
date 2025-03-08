@@ -9,14 +9,16 @@ import { useAuth } from "../contexts/AuthContext"
 import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import LoadingScreen from "../components/LoadingScreen"
+import LocationModal from "../components/LocationModal" // Import the LocationModal component
 
-const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
+const API_BASE_URL = "http://localhost:3001"
 
 const ProductDetail = () => {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { user } = useAuth()
   const { toast } = useToast()
 
@@ -40,7 +42,7 @@ const ProductDetail = () => {
     fetchProduct()
   }, [id, toast])
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (location) => {
     if (!user) {
       toast({
         title: "Login Required",
@@ -57,7 +59,7 @@ const ProductDetail = () => {
         product_id: product.product_id,
         quantity,
         country: product.country,
-        full_location: user.full_location,
+        full_location: location,
         name: product.name,
         price: product.price,
         img: product.img,
@@ -89,6 +91,15 @@ const ProductDetail = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
     }
+  }
+
+  const handleAddToCartClick = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleLocationSubmit = (location) => {
+    handleAddToCart(location)
+    setIsModalOpen(false)
   }
 
   if (loading) {
@@ -179,7 +190,7 @@ const ProductDetail = () => {
             )}
 
             <div className="flex flex-wrap gap-4">
-              <Button onClick={handleAddToCart} disabled={product.stock <= 0} className="flex-1">
+              <Button onClick={handleAddToCartClick} disabled={product.stock <= 0} className="flex-1">
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart
               </Button>
@@ -196,9 +207,14 @@ const ProductDetail = () => {
           </div>
         </motion.div>
       </div>
+
+      <LocationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleLocationSubmit}
+      />
     </div>
   )
 }
 
 export default ProductDetail
-

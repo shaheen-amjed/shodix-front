@@ -24,14 +24,7 @@ const Navbar = () => {
     setIsMenuOpen(false)
   }
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery)}`)
-      setSearchQuery("")
-      setIsMenuOpen(false)
-    }
-  }
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -43,18 +36,7 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <form onSubmit={handleSearch} className="hidden md:flex w-full max-w-sm items-center mx-4">
-          <Input
-            type="search"
-            placeholder="Search products..."
-            className="w-full"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Button type="submit" size="icon" className="ml-2">
-            <Search className="h-4 w-4" />
-          </Button>
-        </form>
+        
 
         <nav className="hidden md:flex items-center gap-4">
           <ThemeToggle />

@@ -99,13 +99,18 @@ const Shop = () => {
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8">Shop Products</h1>
 
-      <div className="mb-8 space-y-4">
+      {/* Dedicated Search Bar */}
+      <div className="mb-8">
         <Input
-          placeholder="Search products..."
+          placeholder="Search products by name, description, or store..."
           value={filters.search}
           onChange={(e) => handleFilterChange("search", e.target.value)}
+          className="w-full max-w-lg"
         />
+      </div>
 
+      {/* Filters Section */}
+      <div className="mb-8 space-y-4">
         <div className="flex gap-4">
           <Select value={filters.country} onValueChange={(value) => handleFilterChange("country", value)}>
             <SelectTrigger>
@@ -138,6 +143,7 @@ const Shop = () => {
         </div>
       </div>
 
+      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <motion.div
@@ -159,4 +165,3 @@ const Shop = () => {
 }
 
 export default Shop
-

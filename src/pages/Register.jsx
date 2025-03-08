@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Footer from "../components/Footer"
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -48,6 +49,7 @@ const Register = () => {
   }
 
   return (
+    <>
     <div className="max-w-md mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -118,6 +120,8 @@ const Register = () => {
         </div>
       </motion.div>
     </div>
+    <Footer />
+    </>
   )
 }
 

@@ -81,7 +81,7 @@ const Cart = () => {
         await addOrder({
           quantity: item.quantity,
           country: item.country,
-          full_location: user.full_location,
+          full_location: item.full_location,
           store_name: item.store_name,
           product_id: item.product_id,
           store_id: item.store_id,
@@ -94,7 +94,7 @@ const Cart = () => {
         title: "Order Placed",
         description: "Your order has been successfully placed",
       })
-      navigate("/profile")
+      navigate("/cart")
     } catch (error) {
       console.error("Error during checkout:", error)
       toast({
@@ -139,7 +139,7 @@ const Cart = () => {
               className="flex items-center gap-4 p-4 border rounded-lg"
             >
               <img
-                src={`https://shodix-api-node-production.up.railway.app${item.img}`}
+                src={`https://shodix-api-node.vercel.app${item.img}`}
                 alt={item.name}
                 className="w-24 h-24 object-cover rounded"
                 onError={(e) => {

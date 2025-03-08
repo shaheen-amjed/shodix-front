@@ -1,7 +1,8 @@
 import axios from "axios"
+import Cookies from 'js-cookie'
 
 // Use environment variables for API URL to support different environments
-const API_URL = "https://shodix-api-node-production.up.railway.app"
+const API_URL = "http://localhost:3001"
 
 // Create axios instance with consistent configuration
 const api = axios.create({
@@ -16,7 +17,7 @@ const api = axios.create({
 // Add token to requests if available
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token")
+    const token = Cookies.get("token")
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -110,8 +111,8 @@ export const completeOrder = (orderId) => api.post("/api/order/done", { order_id
 
 // Message APIs - Fixed to use the main api instance instead of direct axios calls
 export const getInbox = () => api.post("/api/inbox")
-export const getMessages = (chatId) => api.get(`/msg/get/${chatId}`)
-export const sendMessage = (chatId, message) => api.post(`/msg/add/${chatId}`, { msg: message })
+export const getMessages = (chatId) => api.get(`/api/msg/get/${chatId}`)
+export const sendMessage = (chatId, message) => api.post(`/api/msg/add/${chatId}`, { msg: message })
 
 export default api
 
