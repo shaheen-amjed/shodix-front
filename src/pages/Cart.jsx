@@ -143,7 +143,7 @@ const Cart = () => {
                 alt={item.name}
                 className="w-24 h-24 object-cover rounded"
                 onError={(e) => {
-                  e.target.src = "/placeholder.svg?height=100&width=100"
+                  e.target.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlyqPKdFbQpdhwYSFNLCnYuoxgY-6f7VV7Uw&s"
                 }}
               />
               <div className="flex-1">
