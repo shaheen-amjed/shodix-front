@@ -1,32 +1,34 @@
 "use client"
 
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { useCart } from "../contexts/CartContext"
+import {
+  LogInIcon as Logo,
+  ToggleRightIcon as ThemeToggle,
+  MessageSquare,
+  ShoppingCart,
+  User,
+  LogOut,
+  Menu,
+  X,
+  Store,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 const Navbar = () => {
-  const { user, store, isAuthenticated, logout } = useAuth();
-  const { cartCount } = useCart();
-  const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  
+  const { user, store, isAuthenticated, logout } = useAuth()
+  const { cartCount } = useCart()
+  const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   const handleLogout = () => {
-    logout();
-    navigate('/');
-    setIsMenuOpen(false);
-  };
-  
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);\
-      setSearch  
-      navigate(`/shop?search=$encodeURIComponent(searchQuery)`);
-      setSearchQuery('');
-      setIsMenuOpen(false);
-  };
+    logout()
+    navigate("/")
+    setIsMenuOpen(false)
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -38,22 +40,9 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <form onSubmit={handleSearch} className="hidden md:flex w-full max-w-sm items-center mx-4">
-          <Input
-            type="search"
-            placeholder="Search products..."
-            className="w-full"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Button type="submit" size="icon" className="ml-2">
-            <Search className="h-4 w-4" />
-          </Button>
-        </form>
-
         <nav className="hidden md:flex items-center gap-4">
           <ThemeToggle />
-          
+
           {user && (
             <>
               <Link to="/shop">
@@ -132,24 +121,13 @@ const Navbar = () => {
           exit={{ opacity: 0, y: -10 }}
           className="md:hidden p-4 border-t"
         >
-          <form onSubmit={handleSearch} className="flex items-center mb-4">
-            <Input
-              type="search"
-              placeholder="Search products..."
-              className="w-full"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button type="submit" size="icon" className="ml-2">
-              <Search className="h-4 w-4" />
-            </Button>
-          </form>
-
           <div className="grid gap-2">
             {user && (
               <>
                 <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Shop</Button>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Shop
+                  </Button>
                 </Link>
                 <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="ghost" className="w-full justify-start">
@@ -185,10 +163,14 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 <Link to="/store/orders" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Orders</Button>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Orders
+                  </Button>
                 </Link>
                 <Link to="/store/add-product" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Add Product</Button>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Add Product
+                  </Button>
                 </Link>
                 <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
                   <LogOut className="h-5 w-5 mr-2" /> Logout
@@ -199,13 +181,17 @@ const Navbar = () => {
             {!isAuthenticated && (
               <>
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full">Login</Button>
+                  <Button variant="ghost" className="w-full">
+                    Login
+                  </Button>
                 </Link>
                 <Link to="/register" onClick={() => setIsMenuOpen(false)}>
                   <Button className="w-full">Sign Up</Button>
                 </Link>
                 <Link to="/store/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full">Store Login</Button>
+                  <Button variant="outline" className="w-full">
+                    Store Login
+                  </Button>
                 </Link>
               </>
             )}
@@ -213,8 +199,8 @@ const Navbar = () => {
         </motion.div>
       )}
     </header>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
 
