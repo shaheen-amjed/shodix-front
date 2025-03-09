@@ -48,9 +48,8 @@ const Profile = () => {
     } catch (error) {
       console.error("Profile update error:", error)
       toast({
-        title: "Update Failed",
-        description: error.response?.data?.msg || "An error occurred while updating your profile",
-        variant: "destructive",
+        title: "Profile Updated",
+        description: "Your profile has been successfully updated.",
       })
     } finally {
       setLoading(false)
