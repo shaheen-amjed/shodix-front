@@ -93,7 +93,7 @@ const StoreProfile = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -101,30 +101,29 @@ const StoreProfile = () => {
         className="space-y-8"
       >
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Store Dashboard</h1>
-          <p className="text-muted-foreground mt-2 text-gray-600">Manage your store profile, products, and orders</p>
+          <h1 className="text-3xl font-bold">Store Dashboard</h1>
+          <p className="text-muted-foreground mt-2">Manage your store profile, products, and orders</p>
         </div>
 
         {store && (
-          <div className="flex flex-col items-center justify-center mb-8">
-            <h3 className="text-xl font-semibold text-gray-800">{store.store_name}</h3>
+          <div className="flex items-center flex-col justify-center mb-8">
+            <h3>{store.store_name}</h3>
             <br />
-            <h4 className="text-blue-600 hover:text-blue-800">
-              <a href={`/store/${store.store_name}`} target="_blank">View Public Store Profile</a>
-            </h4>
+            <h4><a href={`/store/${store.store_name}`} target="_blank">click to see your store public profile</a></h4>
           </div>
         )}
 
+
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-gray-100 p-2 rounded-lg">
-            <TabsTrigger value="profile" className="py-2 px-4 rounded-md hover:bg-gray-200">Profile</TabsTrigger>
-            <TabsTrigger value="products" className="py-2 px-4 rounded-md hover:bg-gray-200">Products</TabsTrigger>
-            <TabsTrigger value="orders" className="py-2 px-4 rounded-md hover:bg-gray-200">Orders</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+            <TabsTrigger value="products">Products</TabsTrigger>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
           </TabsList>
-          <TabsContent value="profile" className="mt-6">
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-sm">
-              <div className="space-y-4">
-                <Label htmlFor="store_name" className="text-gray-700">Store Name</Label>
+          <TabsContent value="profile">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="store_name">Store Name</Label>
                 <Input
                   id="store_name"
                   name="store_name"
@@ -132,24 +131,22 @@ const StoreProfile = () => {
                   required
                   value={formData.store_name}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
 
-              <div className="space-y-4">
-                <Label htmlFor="password" className="text-gray-700">New Password (leave blank to keep current)</Label>
+              <div className="space-y-2">
+                <Label htmlFor="password">New Password (leave blank to keep current)</Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
 
-              <div className="space-y-4">
-                <Label htmlFor="full_location" className="text-gray-700">Full Location</Label>
+              <div className="space-y-2">
+                <Label htmlFor="full_location">Full Location</Label>
                 <Input
                   id="full_location"
                   name="full_location"
@@ -157,42 +154,28 @@ const StoreProfile = () => {
                   required
                   value={formData.full_location}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
 
-              <div className="space-y-4">
-                <Label htmlFor="bio" className="text-gray-700">Store Bio</Label>
-                <Textarea
-                  id="bio"
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
+              <div className="space-y-2">
+                <Label htmlFor="bio">Store Bio</Label>
+                <Textarea id="bio" name="bio" value={formData.bio} onChange={handleChange} />
               </div>
 
-              <div className="space-y-4">
-                <Label htmlFor="storeImg" className="text-gray-700">Store Image</Label>
-                <Input
-                  id="storeImg"
-                  name="storeImg"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
+              <div className="space-y-2">
+                <Label htmlFor="storeImg">Store Image</Label>
+                <Input id="storeImg" name="storeImg" type="file" accept="image/*" onChange={handleChange} />
               </div>
 
-              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md" disabled={loading}>
+              <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Updating..." : "Update Store Profile"}
               </Button>
             </form>
           </TabsContent>
-          <TabsContent value="products" className="mt-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+          <TabsContent value="products">
+            <div>
               <Link to="/store/add-product">
-                <Button className="mb-4 bg-blue-600 hover:bg-blue-700 text-white">Add New Product</Button>
+                <Button className="mb-4">Add New Product</Button>
               </Link>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products.map((product) => (
@@ -201,8 +184,8 @@ const StoreProfile = () => {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="orders" className="mt-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm space-y-4">
+          <TabsContent value="orders">
+            <div className="space-y-4">
               {orders.map((order) => (
                 <OrderItem key={order.order_id} order={order} />
               ))}
