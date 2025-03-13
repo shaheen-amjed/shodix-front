@@ -37,7 +37,7 @@ const StoreProfile = () => {
         password: "",
         full_location: store.full_location,
         bio: store.bio || "",
-        storeImg: null,
+        storeImg: store.img,
       })
       fetchStoreProducts()
       fetchStoreOrders()
@@ -254,7 +254,7 @@ const StoreProfile = () => {
                         <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center overflow-hidden">
                           {store?.store_img ? (
                             <img
-                              src={store.img || "/placeholder.svg"}
+                              src={store.store_img || "/placeholder.svg"}
                               alt="Store"
                               className="h-full w-full object-cover"
                             />
