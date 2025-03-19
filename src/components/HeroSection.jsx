@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[80vh] overflow-hidden bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
+    <section className="relative h-[80vh] overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-20">
         <div className="absolute inset-0 bg-grid-pattern" />
       </div>
