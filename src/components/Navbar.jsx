@@ -1,200 +1,206 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import { updateStore, getStoreProducts, getStoreOrders } from "../lib/api"
-import { useAuth } from "../contexts/AuthContext"
-import { useToast } from "@/components/ui/use-toast"
+import { ShoppingCart, User, Store, LogOut, Menu, X, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import ProductCard from "../components/ProductCard"
-import OrderItem from "../components/OrderItem"
+import { useAuth } from "../contexts/AuthContext"
+import { useCart } from "../contexts/CartContext"
+import ThemeToggle from "./ThemeToggle"
+import Logo from "./Logo"
 
-const API_BASE_URL = "https://shodix-api-node-production.up.railway.app"
+const Navbar = () => {
+  const { user, store, isAuthenticated, logout } = useAuth()
+  const { cartCount } = useCart()
+  const navigate = useNavigate()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-const StoreProfile = () => {
-  const { store, login } = useAuth()
-  const { toast } = useToast()
-  const [formData, setFormData] = useState({
-    store_name: "",
-    password: "",
-    full_location: "",
-    bio: "",
-    storeImg: null,
-  })
-  const [loading, setLoading] = useState(false)
-  const [products, setProducts] = useState([])
-  const [orders, setOrders] = useState([])
-
-  useEffect(() => {
-    if (store) {
-      setFormData({
-        store_name: store.store_name,
-        password: "",
-        full_location: store.full_location,
-        bio: store.bio || "",
-        storeImg: null,
-      })
-      fetchStoreProducts()
-      fetchStoreOrders()
-    }
-  }, [store])
-
-  const fetchStoreProducts = async () => {
-    try {
-      const response = await getStoreProducts(store.store_id)
-      setProducts(response.data)
-    } catch (error) {
-      console.error("Error fetching store products:", error)
-    }
-  }
-
-  const fetchStoreOrders = async () => {
-    try {
-      const response = await getStoreOrders()
-      setOrders(response.data)
-    } catch (error) {
-      console.error("Error fetching store orders:", error)
-    }
-  }
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }))
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      const response = await updateStore(formData)
-      login(response.data.token, true)
-      toast({
-        title: "Profile Updated",
-        description: "Your store profile has been successfully updated.",
-      })
-    } catch (error) {
-      console.error("Store profile update error:", error)
-      toast({
-        title: "Profile Updated",
-        description: "Your store profile has been successfully updated.",
-      })
-    } finally {
-      setLoading(false)
-    }
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+    setIsMenuOpen(false)
   }
 
   return (
-    <div className="container mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="space-y-8"
-      >
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Store Dashboard</h1>
-          <p className="text-muted-foreground mt-2">Manage your store profile, products, and orders</p>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex items-center justify-between h-16">
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
+            <Logo />
+            <span className="text-xl font-bold">Shodix</span>
+          </Link>
         </div>
 
-        {store && (
-          <div className="flex items-center flex-col justify-center mb-8">
-            <h3>{store.store_name}</h3>
-            <br />
-            <h4><a href={`/store/${store.store_name}`} target="_blank">click to see your store public profile</a></h4>
-          </div>
-        )}
+        <nav className="items-center hidden gap-4 md:flex">
+          <ThemeToggle />
 
-
-        <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="orders">Orders</TabsTrigger>
-          </TabsList>
-          <TabsContent value="profile">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="store_name">Store Name</Label>
-                <Input
-                  id="store_name"
-                  name="store_name"
-                  type="text"
-                  required
-                  value={formData.store_name}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">New Password (leave blank to keep current)</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="full_location">Full Location</Label>
-                <Input
-                  id="full_location"
-                  name="full_location"
-                  type="text"
-                  required
-                  value={formData.full_location}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="bio">Store Bio</Label>
-                <Textarea id="bio" name="bio" value={formData.bio} onChange={handleChange} />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="storeImg">Store Image</Label>
-                <Input id="storeImg" name="storeImg" type="file" accept="image/*" onChange={handleChange} />
-              </div>
-
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Updating..." : "Update Store Profile"}
-              </Button>
-            </form>
-          </TabsContent>
-          <TabsContent value="products">
-            <div>
-              <Link to="/store/add-product">
-                <Button className="mb-4">Add New Product</Button>
+          {user && (
+            <>
+              <Link to="/shop">
+                <Button variant="ghost">Shop</Button>
               </Link>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {products.map((product) => (
-                  <ProductCard key={product.product_id} product={product} isStoreView={true} />
-                ))}
-              </div>
+              <Link to="/inbox">
+                <Button variant="ghost" size="icon">
+                  <MessageSquare className="w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to="/cart">
+                <Button variant="ghost" size="icon" className="relative">
+                  <ShoppingCart className="w-5 h-5" />
+                  {cartCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute flex items-center justify-center w-5 h-5 text-xs rounded-full -top-1 -right-1 bg-primary text-primary-foreground"
+                    >
+                      {cartCount}
+                    </motion.span>
+                  )}
+                </Button>
+              </Link>
+              <Link to="/profile">
+                <Button variant="ghost" size="icon">
+                  <User className="w-5 h-5" />
+                </Button>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={handleLogout}>
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </>
+          )}
+
+          {store && (
+            <>
+              <Link to="/store/inbox">
+                <Button variant="ghost" size="icon">
+                  <MessageSquare className="w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to="/store/profile">
+                <Button variant="ghost" size="icon">
+                  <Store className="w-5 h-5" />
+                </Button>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={handleLogout}>
+                <LogOut className="w-5 h-5" />
+              </Button>
+            </>
+          )}
+
+          {!isAuthenticated && (
+            <>
+              <Link to="/login">
+                <Button variant="ghost">Login</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Sign Up</Button>
+              </Link>
+            </>
+          )}
+        </nav>
+
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </Button>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="fixed inset-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden"
+        >
+          <div className="container h-full p-4">
+            <div className="flex justify-end">
+              <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
+                <X className="w-6 h-6" />
+              </Button>
             </div>
-          </TabsContent>
-          <TabsContent value="orders">
-            <div className="space-y-4">
-              {orders.map((order) => (
-                <OrderItem key={order.order_id} order={order} />
-              ))}
+
+            <div className="grid gap-2">
+              {user && (
+                <>
+                  <Link to="/shop" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      Shop
+                    </Button>
+                  </Link>
+                  <Link to="/inbox" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      <MessageSquare className="w-5 h-5 mr-2" /> Messages
+                    </Button>
+                  </Link>
+                  <Link to="/cart" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      <ShoppingCart className="w-5 h-5 mr-2" /> Cart {cartCount > 0 && `(${cartCount})`}
+                    </Button>
+                  </Link>
+                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      <User className="w-5 h-5 mr-2" /> Profile
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" className="justify-start w-full" onClick={handleLogout}>
+                    <LogOut className="w-5 h-5 mr-2" /> Logout
+                  </Button>
+                </>
+              )}
+
+              {store && (
+                <>
+                  <Link to="/store/inbox" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      <MessageSquare className="w-5 h-5 mr-2" /> Messages
+                    </Button>
+                  </Link>
+                  <Link to="/store/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      <Store className="w-5 h-5 mr-2" /> Store Dashboard
+                    </Button>
+                  </Link>
+                  <Link to="/store/orders" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      Orders
+                    </Button>
+                  </Link>
+                  <Link to="/store/add-product" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="justify-start w-full">
+                      Add Product
+                    </Button>
+                  </Link>
+                  <Button variant="ghost" className="justify-start w-full" onClick={handleLogout}>
+                    <LogOut className="w-5 h-5 mr-2" /> Logout
+                  </Button>
+                </>
+              )}
+
+              {!isAuthenticated && (
+                <>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full">Sign Up</Button>
+                  </Link>
+                  <Link to="/store/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Store Login
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
-          </TabsContent>
-        </Tabs>
-      </motion.div>
-    </div>
+          </div>
+        </motion.div>
+      )}
+    </header>
   )
 }
 
-export default StoreProfile
+export default Navbar
+
