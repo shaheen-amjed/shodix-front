@@ -15,6 +15,9 @@ const HeroSection = () => {
           className="max-w-xl bg-background/80 backdrop-blur-sm p-8 rounded-lg"
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
+           Created by: <span className="text-primary">Shaheen amjed.</span>
+          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Shop Globally, <span className="text-primary">Buy Locally</span>
           </h1>
           <p className="text-lg text-muted-foreground mb-8">
