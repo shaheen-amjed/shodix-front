@@ -2,7 +2,7 @@ import axios from "axios"
 import Cookies from 'js-cookie'
 
 // Use environment variables for API URL to support different environments
-const API_URL = "https://shodix-api-node.netlify.app"
+const API_URL = "https://shodix-api-node-g4n1l.sevalla.app"
 
 // Create axios instance with consistent configuration
 const api = axios.create({
