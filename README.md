@@ -23,3 +23,13 @@ This platform allows both **normal users** and **store owners** to interact:
 
 This frontend is fully prepared to be connected with a backend and scaled into a complete e-commerce SaaS product.
 
+
+
+<pre>
+  
+Copyright (c) 2025 Shaheen Amjed. All Rights Reserved.
+
+Unauthorized copying, distribution, or modification of this project, via any medium, is strictly prohibited.
+This project is proprietary and confidential.
+
+</pre>
