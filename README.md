@@ -9,7 +9,7 @@ This platform allows both **normal users** and **store owners** to interact:
 
 ### 🔧 Tech Stack:
 
-* **React + Vite** – For blazing-fast development and rendering performance
+* **React + Next.js** – For blazing-fast development and rendering performance
 * **Framer Motion** – Smooth animations and interactive transitions
 * **TailwindCSS + shadcn/ui** – Modern, responsive, and accessible design system
 
